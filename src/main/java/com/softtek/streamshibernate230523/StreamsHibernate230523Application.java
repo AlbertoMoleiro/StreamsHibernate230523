@@ -33,111 +33,112 @@ public class StreamsHibernate230523Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+//
+////       Seleccionar todos los campos de la tabla Producto
+//        System.out.println("SELECT * FROM products;");
+//        productService.getAll().forEach(System.out::println);
+//
+////        Obtenerr una consulta con Productid, productname, supplierid, categoryId, UnistsinStock, UnitPrice
+//        System.out.println("SELECT product_id, product_name, supplier_id, category_id, units_in_stock, unit_price FROM products;");
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getSupplierId() + " " + product.getCategoryId() + " " + product.getUnitsInStock() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+//        //Crear una consulta para obtener el IdOrden, IdCustomer, Fecha de la orden de la tabla de ordenes.
+//        System.out.println("SELECT order_id, customer_id, order_date FROM orders;");
+//        orderService.getAll().stream().map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getOrderDate()).forEach(System.out::println);
+//
+////        Crear una consulta para obtener el OrderId, EmployeeId, Fecha de la orden.
+//        System.out.println("SELECT order_id, employee_id, order_date FROM orders;");
+//        orderService.getAll().stream().map(order -> order.getOrderId() + " " + order.getEmployeeId() + " " + order.getOrderDate()).forEach(System.out::println);
+//
+////        Obtener una consulta con Productid, productname y valor del inventario, valor inventrio (UnitsinStock * UnitPrice)
+//        System.out.println("SELECT product_id, product_name, units_in_stock * unit_price AS valor_inventario FROM products;");
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitsInStock() * product.getUnitPrice()).forEach(System.out::println);
+//
+////        Cuanto vale el punto de reorden
+//        System.out.println("SELECT product_id, product_name, reorder_level * unit_price AS punto_reorden FROM products;t");
+//        productService.getAll().stream()
+//                .map(product -> Optional.ofNullable(product.getReorderLevel()).orElse((short) 0) *
+//                        Optional.ofNullable(product.getUnitPrice()).orElse(0.0F))
+//                .forEach(System.out::println);
+//
+////        Mostrar una consulta con Productid, productname y precio, el nombre del producto debe estar en mayuscula
+//        System.out.println("SELECT product_id, UPPER(product_name) AS product_name, unit_price FROM products;");
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName().toUpperCase() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Mostrar una consulta con Productid, productname y precio, el nombre del producto debe contener unicamente 10 caracteres
+//        System.out.println("SELECT product_id, LEFT(product_name, 10) AS product_name, unit_price FROM products;");
+//        Function<String,String> substring = s -> s.length()>10? s.substring(0,10):s;
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + substring.apply(product.getProductName()) + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Obtenre una consulta que muestre la longitud del nombre del producto
+//        System.out.println("SELECT product_id, LOWER(product_name) AS product_name, unit_price FROM products;");
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName().length() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Obtener una consulta de la tabla de productos que muestre el nombre en minúscula
+//        System.out.println("SELECT product_id, LOWER(product_name) AS product_name, unit_price FROM products;");
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName().toLowerCase() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////  Mostrar una consulta con Productid, productname y precio, el nombre del producto debe contener máximo 10 caracteres y se deben mostrar en mayúscula
+//        System.out.println("SELECT product_id, UPPER(LEFT(product_name, 10)) AS product_name, unit_price FROM products;");
+//        productService.getAll().stream().map(product -> product.getProductId() + " " + substring.apply(product.getProductName()).toUpperCase() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Obtener de la tabla de Customers las columnas CustomerId, CompanyName, Pais Obtener los clientes cuyo pais sea Spain
+//        System.out.println("SELECT customer_id, company_name, country FROM customers WHERE country = 'Spain';");
+//        customerService.getAll().stream().filter(customer -> customer.getCountry().equals("Spain")).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCountry()).forEach(System.out::println);
+//
+////        Obtener de la tabla de Customers las columnas CustomerId, CompanyName, Pais, Obtener los clientes cuyo pais comience con la letra U
+//        System.out.println("SELECT customer_id, company_name, country FROM customers WHERE country LIKE 'U%';");
+//        customerService.getAll().stream().filter(customer -> customer.getCountry().startsWith("U")).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCountry()).forEach(System.out::println);
+//
+////        Obtener de la tabla de Customers las columnas CustomerId, CompanyName, Pais, Obtener los clientes cuyo pais comience con la letra U,S,A
+//        System.out.println("SELECT customer_id, company_name, country FROM customers WHERE LEFT(country,1) IN ('U','A','S');");
+//        customerService.getAll().stream().filter(customer -> customer.getCountry().startsWith("U") || customer.getCountry().startsWith("S") || customer.getCountry().startsWith("A")).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCountry()).forEach(System.out::println);
+//
+////        Obtener de la tabla de Productos las columnas productid, ProductName, UnitPrice cuyos precios esten entre 50 y 150
+//        System.out.println("SELECT product_id, product_name, unit_price FROM products WHERE unit_price BETWEEN 50 AND 150;");
+//        productService.getAll().stream().filter(product -> product.getUnitPrice() > 50 && product.getUnitPrice() < 150).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Obtener de la tabla de Productos las columnas productid, ProductName, UnitPrice, UnitsInStock cuyas existencias esten entre 50 y 100
+//        System.out.println("SELECT product_id, product_name, unit_price, units_in_stock FROM products WHERE units_in_stock BETWEEN 50 AND 100;");
+//        productService.getAll().stream().filter(product -> product.getUnitsInStock() > 50 && product.getUnitsInStock() < 100).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice() + " " + product.getUnitsInStock()).forEach(System.out::println);
+//
+////        Obtener las columnas OrderId, CustomerId, employeeid de la tabla de ordenes cuyos empleados sean 1, 4, 9
+//        System.out.println("SELECT order_id, customer_id, employee_id FROM orders WHERE employee_id IN (1, 4, 9);");
+//        orderService.getAll().stream().filter(order -> order.getEmployeeId() == 1 || order.getEmployeeId() == 4 || order.getEmployeeId() == 9).map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getEmployeeId()).forEach(System.out::println);
+//
+////    ORDENAR EL RESULTADO DE LA QUERY POR ALGUNA COLUMNA Obtener la información de la tabla de Products, Ordenarlos por Nombre del Producto de forma ascendente
+//        System.out.println("SELECT * FROM products ORDER BY product_name ASC;");
+//        productService.getAll().stream().sorted(Comparator.comparing(Product::getProductName)).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Obtener la información de la tabla de Products, Ordenarlos por Categoria de forma ascendente y por precio unitario de forma descendente
+//        System.out.println("SELECT * FROM products ORDER BY category_id ASC, unit_price DESC;");
+//        productService.getAll().stream().sorted(Comparator.comparing(Product::getCategoryId).thenComparing(Comparator.comparing(Product::getUnitPrice).reversed())).map(product -> product.getCategoryId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        Obtener la información de la tabla de Clientes, Customerid, CompanyName, city, country ordenar por pais, ciudad de forma ascendente
+//        System.out.println("SELECT customer_id, company_name, city, country FROM customers ORDER BY country ASC, city ASC;");
+//        customerService.getAll().stream().sorted(Comparator.comparing(Customer::getCountry).thenComparing(Customer::getCity)).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCity() + " " + customer.getCountry()).forEach(System.out::println);
+//
+////Obtener los productos productid, productname, categoryid, supplierid ordenar por categoryid y supplier únicamente mostrar aquellos cuyo precio esté entre 25 y 200
+//        System.out.println("SELECT product_id, product_name, category_id, supplier_id \\n\" +\n" +
+//                "                \"FROM products \\n\" +\n" +
+//                "                \"WHERE unit_price BETWEEN 25 AND 200 \\n\" +\n" +
+//                "                \"ORDER BY category_id ASC, supplier_id ASC;");
+//        productService.getAll().stream().filter(product -> product.getUnitPrice() > 25 && product.getUnitPrice() < 200).sorted(Comparator.comparing(Product::getCategoryId).thenComparing(Product::getSupplierId)).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getCategoryId() + " " + product.getSupplierId()).forEach(System.out::println);
+//
+////        Cuantos productos hay en la tabla de productos
+//        System.out.println("SELECT COUNT(*) FROM products;");
+//        System.out.println(productService.getAll().stream().count());
+//
+////        de la tabla de productos Sumar las cantidades en existencia
+//        System.out.println("SELECT SUM(units_in_stock) FROM products;");
+//
+//        System.out.println(productService.getAll().stream().mapToInt(Product::getUnitsInStock).sum());
+//
+////        Promedio de los precios de la tabla de productos
+//        System.out.println("SELECT AVG(unit_price) FROM products;");
+//        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).average());
 
-//       Seleccionar todos los campos de la tabla Producto
-        System.out.println("SELECT * FROM products;");
-        productService.getAll().forEach(System.out::println);
-
-//        Obtenerr una consulta con Productid, productname, supplierid, categoryId, UnistsinStock, UnitPrice
-        System.out.println("SELECT product_id, product_name, supplier_id, category_id, units_in_stock, unit_price FROM products;");
-        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getSupplierId() + " " + product.getCategoryId() + " " + product.getUnitsInStock() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-        //Crear una consulta para obtener el IdOrden, IdCustomer, Fecha de la orden de la tabla de ordenes.
-        System.out.println("SELECT order_id, customer_id, order_date FROM orders;");
-        orderService.getAll().stream().map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getOrderDate()).forEach(System.out::println);
-
-//        Crear una consulta para obtener el OrderId, EmployeeId, Fecha de la orden.
-        System.out.println("SELECT order_id, employee_id, order_date FROM orders;");
-        orderService.getAll().stream().map(order -> order.getOrderId() + " " + order.getEmployeeId() + " " + order.getOrderDate()).forEach(System.out::println);
-
-//        Obtener una consulta con Productid, productname y valor del inventario, valor inventrio (UnitsinStock * UnitPrice)
-        System.out.println("SELECT product_id, product_name, units_in_stock * unit_price AS valor_inventario FROM products;");
-        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitsInStock() * product.getUnitPrice()).forEach(System.out::println);
-
-//        Cuanto vale el punto de reorden
-        System.out.println("SELECT product_id, product_name, reorder_level * unit_price AS punto_reorden FROM products;t");
-        productService.getAll().stream()
-                .map(product -> Optional.ofNullable(product.getReorderLevel()).orElse((short) 0) *
-                        Optional.ofNullable(product.getUnitPrice()).orElse(0.0F))
-                .forEach(System.out::println);
-
-//        Mostrar una consulta con Productid, productname y precio, el nombre del producto debe estar en mayuscula
-        System.out.println("SELECT product_id, UPPER(product_name) AS product_name, unit_price FROM products;");
-        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName().toUpperCase() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Mostrar una consulta con Productid, productname y precio, el nombre del producto debe contener unicamente 10 caracteres
-        System.out.println("SELECT product_id, LEFT(product_name, 10) AS product_name, unit_price FROM products;");
-        Function<String,String> substring = s -> s.length()>10? s.substring(0,10):s;
-        productService.getAll().stream().map(product -> product.getProductId() + " " + substring.apply(product.getProductName()) + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Obtenre una consulta que muestre la longitud del nombre del producto
-        System.out.println("SELECT product_id, LOWER(product_name) AS product_name, unit_price FROM products;");
-        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName().length() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Obtener una consulta de la tabla de productos que muestre el nombre en minúscula
-        System.out.println("SELECT product_id, LOWER(product_name) AS product_name, unit_price FROM products;");
-        productService.getAll().stream().map(product -> product.getProductId() + " " + product.getProductName().toLowerCase() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//  Mostrar una consulta con Productid, productname y precio, el nombre del producto debe contener máximo 10 caracteres y se deben mostrar en mayúscula
-        System.out.println("SELECT product_id, UPPER(LEFT(product_name, 10)) AS product_name, unit_price FROM products;");
-        productService.getAll().stream().map(product -> product.getProductId() + " " + substring.apply(product.getProductName()).toUpperCase() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Obtener de la tabla de Customers las columnas CustomerId, CompanyName, Pais Obtener los clientes cuyo pais sea Spain
-        System.out.println("SELECT customer_id, company_name, country FROM customers WHERE country = 'Spain';");
-        customerService.getAll().stream().filter(customer -> customer.getCountry().equals("Spain")).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCountry()).forEach(System.out::println);
-
-//        Obtener de la tabla de Customers las columnas CustomerId, CompanyName, Pais, Obtener los clientes cuyo pais comience con la letra U
-        System.out.println("SELECT customer_id, company_name, country FROM customers WHERE country LIKE 'U%';");
-        customerService.getAll().stream().filter(customer -> customer.getCountry().startsWith("U")).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCountry()).forEach(System.out::println);
-
-//        Obtener de la tabla de Customers las columnas CustomerId, CompanyName, Pais, Obtener los clientes cuyo pais comience con la letra U,S,A
-        System.out.println("SELECT customer_id, company_name, country FROM customers WHERE LEFT(country,1) IN ('U','A','S');");
-        customerService.getAll().stream().filter(customer -> customer.getCountry().startsWith("U") || customer.getCountry().startsWith("S") || customer.getCountry().startsWith("A")).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCountry()).forEach(System.out::println);
-
-//        Obtener de la tabla de Productos las columnas productid, ProductName, UnitPrice cuyos precios esten entre 50 y 150
-        System.out.println("SELECT product_id, product_name, unit_price FROM products WHERE unit_price BETWEEN 50 AND 150;");
-        productService.getAll().stream().filter(product -> product.getUnitPrice() > 50 && product.getUnitPrice() < 150).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Obtener de la tabla de Productos las columnas productid, ProductName, UnitPrice, UnitsInStock cuyas existencias esten entre 50 y 100
-        System.out.println("SELECT product_id, product_name, unit_price, units_in_stock FROM products WHERE units_in_stock BETWEEN 50 AND 100;");
-        productService.getAll().stream().filter(product -> product.getUnitsInStock() > 50 && product.getUnitsInStock() < 100).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice() + " " + product.getUnitsInStock()).forEach(System.out::println);
-
-//        Obtener las columnas OrderId, CustomerId, employeeid de la tabla de ordenes cuyos empleados sean 1, 4, 9
-        System.out.println("SELECT order_id, customer_id, employee_id FROM orders WHERE employee_id IN (1, 4, 9);");
-        orderService.getAll().stream().filter(order -> order.getEmployeeId() == 1 || order.getEmployeeId() == 4 || order.getEmployeeId() == 9).map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getEmployeeId()).forEach(System.out::println);
-
-//    ORDENAR EL RESULTADO DE LA QUERY POR ALGUNA COLUMNA Obtener la información de la tabla de Products, Ordenarlos por Nombre del Producto de forma ascendente
-        System.out.println("SELECT * FROM products ORDER BY product_name ASC;");
-        productService.getAll().stream().sorted(Comparator.comparing(Product::getProductName)).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Obtener la información de la tabla de Products, Ordenarlos por Categoria de forma ascendente y por precio unitario de forma descendente
-        System.out.println("SELECT * FROM products ORDER BY category_id ASC, unit_price DESC;");
-        productService.getAll().stream().sorted(Comparator.comparing(Product::getCategoryId).thenComparing(Product::getUnitPrice).reversed()).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        Obtener la información de la tabla de Clientes, Customerid, CompanyName, city, country ordenar por pais, ciudad de forma ascendente
-        System.out.println("SELECT customer_id, company_name, city, country FROM customers ORDER BY country ASC, city ASC;");
-        customerService.getAll().stream().sorted(Comparator.comparing(Customer::getCountry).thenComparing(Customer::getCity)).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCity() + " " + customer.getCountry()).forEach(System.out::println);
-
-//Obtener los productos productid, productname, categoryid, supplierid ordenar por categoryid y supplier únicamente mostrar aquellos cuyo precio esté entre 25 y 200
-        System.out.println("SELECT product_id, product_name, category_id, supplier_id \\n\" +\n" +
-                "                \"FROM products \\n\" +\n" +
-                "                \"WHERE unit_price BETWEEN 25 AND 200 \\n\" +\n" +
-                "                \"ORDER BY category_id ASC, supplier_id ASC;");
-        productService.getAll().stream().filter(product -> product.getUnitPrice() > 25 && product.getUnitPrice() < 200).sorted(Comparator.comparing(Product::getCategoryId).thenComparing(Product::getSupplierId)).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getCategoryId() + " " + product.getSupplierId()).forEach(System.out::println);
-
-//        Cuantos productos hay en la tabla de productos
-        System.out.println("SELECT COUNT(*) FROM products;");
-        System.out.println(productService.getAll().stream().count());
-
-//        de la tabla de productos Sumar las cantidades en existencia
-        System.out.println("SELECT SUM(units_in_stock) FROM products;");
-
-        System.out.println(productService.getAll().stream().mapToInt(Product::getUnitsInStock).sum());
-
-//        Promedio de los precios de la tabla de productos
-        System.out.println("SELECT AVG(unit_price) FROM products;");
-        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).average());
-
+//        Ordenar
 //        Obtener los datos de productos ordenados descendentemente por precio unitario de la categoría 1
         System.out.println("SELECT * FROM products WHERE category_id = 1 ORDER BY unit_price DESC;");
         productService.getAll().stream().filter(product -> product.getCategoryId() == 1).sorted(Comparator.comparing(Product::getUnitPrice).reversed()).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice() + " " + product.getCategoryId()).forEach(System.out::println);
