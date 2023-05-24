@@ -191,12 +191,13 @@ public class StreamsHibernate230523Application implements CommandLineRunner {
 
 //        De la tabla de ordenes únicamente de los registros cuya ShipCity sea Madrid, Sevilla, Barcelona, Lisboa, LondonOrdenado por el campo de suma del envío
         System.out.println("SELECT ship_city, SUM(freight) AS suma_envio FROM orders WHERE ship_city IN ('Madrid', 'Sevilla', 'Barcelona', 'Lisboa', 'London') GROUP BY ship_city ORDER BY suma_envio;  ");
-        orderService.getAll().stream().filter(order -> Optional.ofNullable(
-                order.getShipCity()).orElse("").equals("Madrid")
-                || Optional.ofNullable(order.getShipCity()).orElse("").equals("Sevilla")
-                || Optional.ofNullable(order.getShipCity()).orElse("").equals("Barcelona")
-                || Optional.ofNullable(order.getShipCity()).orElse("").equals("Lisboa")
-                || Optional.ofNullable(order.getShipCity()).orElse("").equals("London"))
+        orderService.getAll().stream().filter(order ->
+                order.getShipCity() != null && (
+                order.getShipCity().equals("Madrid")
+                || order.getShipCity().equals("Sevilla")
+                || order.getShipCity().equals("Barcelona")
+                || order.getShipCity().equals("Lisboa")
+                || order.getShipCity().equals("London")))
                 .collect(Collectors.groupingBy(Order::getShipCity, Collectors.summingDouble(order -> order.getFreight() == null ?0:order.getFreight()))).entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getValue))
                 .map(entry -> entry.getKey() + " " + entry.getValue())
