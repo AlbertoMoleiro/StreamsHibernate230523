@@ -11,6 +11,7 @@ import com.softtek.streamshibernate230523.model.Product;
 import com.softtek.streamshibernate230523.model.Customer;
 import com.softtek.streamshibernate230523.model.Order;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -186,7 +187,16 @@ public class StreamsHibernate230523Application implements CommandLineRunner {
 
 //        De la tabla de ordenes únicamente de los registros cuya ShipCity sea Madrid, Sevilla, Barcelona, Lisboa, LondonOrdenado por el campo de suma del envío
         System.out.println("Select OrderId, CustomerId, Freight, ShipCity from Orders");
-        orderService.getAll().stream().filter(order -> Optional.ofNullable(order.getShipCity()).orElse("").equals("Madrid") || Optional.ofNullable(order.getShipCity()).orElse("").equals("Sevilla") || Optional.ofNullable(order.getShipCity()).orElse("").equals("Barcelona") || Optional.ofNullable(order.getShipCity()).orElse("").equals("Lisboa") || Optional.ofNullable(order.getShipCity()).orElse("").equals("London")).sorted(Comparator.comparing(Order::getFreight)).map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getFreight() + " " + order.getShipCity()).forEach(System.out::println);
+        orderService.getAll().stream().filter(order -> Optional.ofNullable(
+                order.getShipCity()).orElse("").equals("Madrid")
+                || Optional.ofNullable(order.getShipCity()).orElse("").equals("Sevilla")
+                || Optional.ofNullable(order.getShipCity()).orElse("").equals("Barcelona")
+                || Optional.ofNullable(order.getShipCity()).orElse("").equals("Lisboa")
+                || Optional.ofNullable(order.getShipCity()).orElse("").equals("London"))
+                .collect(Collectors.groupingBy(Order::getShipCity, Collectors.summingDouble(order -> order.getFreight() == null ?0:order.getFreight()))).entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .map(entry -> entry.getKey() + " " + entry.getValue())
+                .forEach(System.out::println);
 
 //        obtener el precio promedio de los productos por categoria sin contar con los productos descontinuados (Discontinued)
         System.out.println("Select ProductId, ProductName, CategoryId, UnitPrice, Discontinued from Product");
