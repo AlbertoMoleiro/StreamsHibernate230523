@@ -31,7 +31,7 @@ public class Product {
     private String quantityPerUnit;
 
     @Column(name = "unit_price")
-    private Float unitPrice;
+    private Double unitPrice;
 
     @Column(name = "units_in_stock")
     private Short unitsInStock;

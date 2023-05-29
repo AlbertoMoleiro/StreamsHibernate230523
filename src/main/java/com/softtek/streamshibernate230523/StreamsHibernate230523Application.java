@@ -7,14 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.softtek.streamshibernate230523.model.Product;
-import com.softtek.streamshibernate230523.model.Customer;
-import com.softtek.streamshibernate230523.model.Order;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class StreamsHibernate230523Application implements CommandLineRunner {
@@ -33,6 +25,11 @@ public class StreamsHibernate230523Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+//        Ejercicio DTO
+        productService.getPromedioPrecios().forEach(System.out::println);
+        productService.getSumaStock().forEach(System.out::println);
+        productService.getPromedioCategory().forEach(System.out::println);
+
 //
 ////       Seleccionar todos los campos de la tabla Producto
 //        System.out.println("SELECT * FROM products;");
@@ -137,99 +134,133 @@ public class StreamsHibernate230523Application implements CommandLineRunner {
 ////        Promedio de los precios de la tabla de productos
 //        System.out.println("SELECT AVG(unit_price) FROM products;");
 //        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).average());
+//
+////        Ordenar
+////        Obtener los datos de productos ordenados descendentemente por precio unitario de la categoría 1
+//        System.out.println("SELECT * FROM products WHERE category_id = 1 ORDER BY unit_price DESC;");
+//        productService.getAll().stream()
+//                .filter(product -> product.getCategoryId() == 1)
+//                .sorted(Comparator.comparing(Product::getUnitPrice).reversed())
+//                .map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice() + " " + product.getCategoryId())
+//                .forEach(System.out::println);
+//
+////        Obtener los datos de los clientes(Customers) ordenados descendentemente por nombre(CompanyName) que se encuentren en la ciudad(city) de barcelona, Lisboa
+//        System.out.println("SELECT * FROM customers WHERE city IN ('Barcelona', 'Lisboa') ORDER BY company_name DESC;");
+//        customerService.getAll().stream()
+//                .filter(customer -> customer.getCity().equals("Barcelona") || customer.getCity().equals("Lisboa"))
+//                .sorted(Comparator.comparing(Customer::getCompanyName).reversed())
+//                .map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCity()).forEach(System.out::println);
+//
+////        Obtener los datos de las ordenes, ordenados descendentemente por la fecha de la orden cuyo cliente(CustomerId) sea ALFKI
+//        System.out.println("SELECT * FROM orders WHERE customer_id = 'ALFKI' ORDER BY order_date DESC;");
+//        orderService.getAll().stream()
+//                .filter(order -> order.getCustomerId().equals("ALFKI"))
+//                .sorted(Comparator.comparing(Order::getOrderDate).reversed())
+//                .map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getOrderDate()).forEach(System.out::println);
+//
+////        --Obtener los datos de las ordenes ordenados ascendentemente por la fecha de la orden cuyo empleado sea 2 o 4
+//        System.out.println("SELECT * FROM order_details WHERE product_id IN (1, 5, 20) ORDER BY unit_price ASC;");
+//        orderService.getAll().stream()
+//                .filter(order -> order.getEmployeeId() == 2 || order.getEmployeeId() == 4)
+//                .sorted(Comparator.comparing(Order::getOrderDate))
+//                .map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getOrderDate() + " " + order.getEmployeeId()).forEach(System.out::println);
+//
+////        Obtener los productos cuyo precio están entre 30 y 60 ordenado por nombre
+//        System.out.println("SELECT * FROM products WHERE unit_price BETWEEN 30 AND 60 ORDER BY product_name ASC;");
+//        productService.getAll().stream()
+//                .filter(product -> product.getUnitPrice() > 30 && product.getUnitPrice() < 60)
+//                .sorted(Comparator.comparing(Product::getProductName))
+//                .map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
+//
+////        OBTENER EL MAXIMO, MINIMO Y PROMEDIO DE PRECIO UNITARIO DE LA TABLA DE PRODUCTOS UTILIZANDO ALIAS
+//        System.out.println("SELECT MAX(unit_price) AS precio_maximo, MIN(unit_price) AS precio_minimo, AVG(unit_price) AS precio_promedio FROM products;");
+//        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).max());
+//        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).min());
+//        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).average());
+//
+////        Numero de productos por categoria
+//        System.out.println("SELECT category_id, COUNT(*) FROM products GROUP BY category_id;");
+//        productService.getAll().stream()
+//                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.counting()))
+//                .forEach((categoryId, count) -> System.out.println(categoryId + " " + count));
+//
+////        Obtener el precio promedio por proveedor de la tabla de productos
+//        System.out.println("SELECT supplier_id, AVG(unit_price) FROM products GROUP BY supplier_id;");
+//        productService.getAll().stream()
+//                .collect(Collectors.groupingBy(Product::getSupplierId, Collectors.averagingDouble(Product::getUnitPrice)))
+//                .forEach((supplierId, average) -> System.out.println(supplierId + " " + average));
+//
+////        Obtener la suma de inventario (UnitsInStock) por SupplierID De la tabla de productos
+//        System.out.println("SELECT supplier_id, SUM(units_in_stock) FROM products GROUP BY supplier_id;");
+//        productService.getAll().stream()
+//                .collect(Collectors.groupingBy(Product::getSupplierId, Collectors.summingInt(Product::getUnitsInStock)))
+//                .forEach((supplierId, sum) -> System.out.println(supplierId + " " + sum));
+//
+////        Contar las ordenes por cliente de la tabla de orders
+//        System.out.println("SELECT customer_id, COUNT(*) FROM orders GROUP BY customer_id;");
+//        orderService.getAll().stream()
+//                .collect(Collectors.groupingBy(Order::getCustomerId, Collectors.counting()))
+//                .forEach((customerId, count) -> System.out.println(customerId + " " + count));
+//
+////        Contar las ordenes por empleado de la tabla de ordenes unicamente del empleado 1,3,5,6
+//        System.out.println("SELECT employee_id, COUNT(*) FROM orders WHERE employee_id IN (1, 3, 5, 6) GROUP BY employee_id;");
+//        orderService.getAll().stream().filter(order -> order.getEmployeeId() == 1 || order.getEmployeeId() == 3 || order.getEmployeeId() == 5 || order.getEmployeeId() == 6).collect(Collectors.groupingBy(Order::getEmployeeId, Collectors.counting())).forEach((employeeId, count) -> System.out.println(employeeId + " " + count));
+//
+////        Obtener la suma del envío (freight) por cliente
+//        System.out.println("SELECT customer_id, SUM(freight) FROM orders GROUP BY customer_id;");
+//        orderService.getAll().stream()
+//                .collect(Collectors.groupingBy(Order::getCustomerId, Collectors.summingDouble(order -> order.getFreight() == null ?0:order.getFreight())))
+//                .forEach((customerId, sum) -> System.out.println(customerId + " " + sum));
+//
+////        De la tabla de ordenes únicamente de los registros cuya ShipCity sea Madrid, Sevilla, Barcelona, Lisboa, LondonOrdenado por el campo de suma del envío
+//        System.out.println("SELECT ship_city, SUM(freight) AS suma_envio FROM orders WHERE ship_city IN ('Madrid', 'Sevilla', 'Barcelona', 'Lisboa', 'London') GROUP BY ship_city ORDER BY suma_envio;  ");
+//        orderService.getAll().stream().filter(order ->
+//                order.getShipCity() != null && (
+//                order.getShipCity().equals("Madrid")
+//                || order.getShipCity().equals("Sevilla")
+//                || order.getShipCity().equals("Barcelona")
+//                || order.getShipCity().equals("Lisboa")
+//                || order.getShipCity().equals("London")))
+//                .collect(Collectors.groupingBy(Order::getShipCity, Collectors.summingDouble(order -> order.getFreight() == null ?0:order.getFreight()))).entrySet().stream()
+//                .sorted(Comparator.comparing(Map.Entry::getValue))
+//                .map(entry -> entry.getKey() + " " + entry.getValue())
+//                .forEach(System.out::println);
+//
+////        obtener el precio promedio de los productos por categoria sin contar con los productos descontinuados (Discontinued)
+//        System.out.println("SELECT category_id, AVG(unit_price) FROM products WHERE discontinued = 0 GROUP BY category_id;");
+//        productService.getAll().stream()
+//                .filter(product -> product.getDiscontinued() == 0)
+//                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.averagingDouble(Product::getUnitPrice)))
+//                .forEach((categoryId, average) -> System.out.println(categoryId + " " + average));
+//
+////        Obtener la cantidad de productos por categoria,  aquellos cuyo precio se encuentre entre 10 y 60 que tengan más de 12 productos
+//        System.out.println("SELECT category_id, COUNT(*) FROM products WHERE unit_price BETWEEN 10 AND 60 GROUP BY category_id HAVING COUNT(*) > 12;");
+//        productService.getAll().stream().filter(product -> product.getUnitPrice() > 10 && product.getUnitPrice() < 60)
+//                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.counting()))
+//                .entrySet().stream()
+//                .filter(entry -> entry.getValue() > 12)
+//                .forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
+////        --OBTENER LA SUMA DE LAS UNIDADES EN EXISTENCIA (UnitsInStock) POR CATEGORIA, Y TOMANDO EN CUENTA UNICAMENTE LOS PRODUCTOS CUYO PROVEEDOR (SupplierID) SEA IGUAL A 17, 19, 16.
+////                --cuya categoria tenga menos de 100 unidades ordenado por unidades
+//        System.out.println("SELECT category_id, units_exist \n" +
+//                "FROM (\n" +
+//                "    SELECT category_id, SUM(units_in_stock) AS units_exist \n" +
+//                "    FROM products \n" +
+//                "    WHERE supplier_id IN (17, 19, 16) \n" +
+//                "    GROUP BY category_id) AS tabla\n" +
+//                "WHERE units_exist > 100 \n" +
+//                "ORDER BY units_exist;");
+//        productService.getAll().stream().filter(product -> product.getSupplierId() == 17 || product.getSupplierId() == 19 || product.getSupplierId() == 16)
+//                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.summingInt(Product::getUnitsInStock)))
+//                .entrySet().stream()
+//                .filter(entry -> entry.getValue() < 200)
+//                .sorted(Comparator.comparing(Map.Entry::getValue))
+//                .forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
+//
 
-//        Ordenar
-//        Obtener los datos de productos ordenados descendentemente por precio unitario de la categoría 1
-        System.out.println("SELECT * FROM products WHERE category_id = 1 ORDER BY unit_price DESC;");
-        productService.getAll().stream().filter(product -> product.getCategoryId() == 1).sorted(Comparator.comparing(Product::getUnitPrice).reversed()).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice() + " " + product.getCategoryId()).forEach(System.out::println);
 
-//        Obtener los datos de los clientes(Customers) ordenados descendentemente por nombre(CompanyName) que se encuentren en la ciudad(city) de barcelona, Lisboa
-        System.out.println("SELECT * FROM customers WHERE city IN ('Barcelona', 'Lisboa') ORDER BY company_name DESC;");
-        customerService.getAll().stream().filter(customer -> customer.getCity().equals("Barcelona") || customer.getCity().equals("Lisboa")).sorted(Comparator.comparing(Customer::getCompanyName).reversed()).map(customer -> customer.getCustomerId() + " " + customer.getCompanyName() + " " + customer.getCity()).forEach(System.out::println);
+//        DTO EJERCICIOS
 
-//        Obtener los datos de las ordenes, ordenados descendentemente por la fecha de la orden cuyo cliente(CustomerId) sea ALFKI
-        System.out.println("SELECT * FROM orders WHERE customer_id = 'ALFKI' ORDER BY order_date DESC;");
-        orderService.getAll().stream().filter(order -> order.getCustomerId().equals("ALFKI")).sorted(Comparator.comparing(Order::getOrderDate).reversed()).map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getOrderDate()).forEach(System.out::println);
-
-//        --Obtener los datos de las ordenes ordenados ascendentemente por la fecha de la orden cuyo empleado sea 2 o 4
-        System.out.println("SELECT * FROM order_details WHERE product_id IN (1, 5, 20) ORDER BY unit_price ASC;");
-        orderService.getAll().stream().filter(order -> order.getEmployeeId() == 2 || order.getEmployeeId() == 4).sorted(Comparator.comparing(Order::getOrderDate)).map(order -> order.getOrderId() + " " + order.getCustomerId() + " " + order.getOrderDate() + " " + order.getEmployeeId()).forEach(System.out::println);
-
-//        Obtener los productos cuyo precio están entre 30 y 60 ordenado por nombre
-        System.out.println("SELECT * FROM products WHERE unit_price BETWEEN 30 AND 60 ORDER BY product_name ASC;");
-        productService.getAll().stream().filter(product -> product.getUnitPrice() > 30 && product.getUnitPrice() < 60).sorted(Comparator.comparing(Product::getProductName)).map(product -> product.getProductId() + " " + product.getProductName() + " " + product.getUnitPrice()).forEach(System.out::println);
-
-//        OBTENER EL MAXIMO, MINIMO Y PROMEDIO DE PRECIO UNITARIO DE LA TABLA DE PRODUCTOS UTILIZANDO ALIAS
-        System.out.println("SELECT MAX(unit_price) AS precio_maximo, MIN(unit_price) AS precio_minimo, AVG(unit_price) AS precio_promedio FROM products;");
-        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).max());
-        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).min());
-        System.out.println(productService.getAll().stream().mapToDouble(Product::getUnitPrice).average());
-
-//        Numero de productos por categoria
-        System.out.println("SELECT category_id, COUNT(*) FROM products GROUP BY category_id;");
-        productService.getAll().stream().collect(Collectors.groupingBy(Product::getCategoryId, Collectors.counting())).forEach((categoryId, count) -> System.out.println(categoryId + " " + count));
-
-//        Obtener el precio promedio por proveedor de la tabla de productos
-        System.out.println("SELECT supplier_id, AVG(unit_price) FROM products GROUP BY supplier_id;");
-        productService.getAll().stream().collect(Collectors.groupingBy(Product::getSupplierId, Collectors.averagingDouble(Product::getUnitPrice))).forEach((supplierId, average) -> System.out.println(supplierId + " " + average));
-
-//        Obtener la suma de inventario (UnitsInStock) por SupplierID De la tabla de productos
-        System.out.println("SELECT supplier_id, SUM(units_in_stock) FROM products GROUP BY supplier_id;");
-        productService.getAll().stream().collect(Collectors.groupingBy(Product::getSupplierId, Collectors.summingInt(Product::getUnitsInStock))).forEach((supplierId, sum) -> System.out.println(supplierId + " " + sum));
-
-//        Contar las ordenes por cliente de la tabla de orders
-        System.out.println("SELECT customer_id, COUNT(*) FROM orders GROUP BY customer_id;");
-        orderService.getAll().stream().collect(Collectors.groupingBy(Order::getCustomerId, Collectors.counting())).forEach((customerId, count) -> System.out.println(customerId + " " + count));
-
-//        Contar las ordenes por empleado de la tabla de ordenes unicamente del empleado 1,3,5,6
-        System.out.println("SELECT employee_id, COUNT(*) FROM orders WHERE employee_id IN (1, 3, 5, 6) GROUP BY employee_id;");
-        orderService.getAll().stream().filter(order -> order.getEmployeeId() == 1 || order.getEmployeeId() == 3 || order.getEmployeeId() == 5 || order.getEmployeeId() == 6).collect(Collectors.groupingBy(Order::getEmployeeId, Collectors.counting())).forEach((employeeId, count) -> System.out.println(employeeId + " " + count));
-
-//        Obtener la suma del envío (freight) por cliente
-        System.out.println("SELECT customer_id, SUM(freight) FROM orders GROUP BY customer_id;");
-        orderService.getAll().stream().collect(Collectors.groupingBy(Order::getCustomerId, Collectors.summingDouble(order -> order.getFreight() == null ?0:order.getFreight()))).forEach((customerId, sum) -> System.out.println(customerId + " " + sum));
-
-//        De la tabla de ordenes únicamente de los registros cuya ShipCity sea Madrid, Sevilla, Barcelona, Lisboa, LondonOrdenado por el campo de suma del envío
-        System.out.println("SELECT ship_city, SUM(freight) AS suma_envio FROM orders WHERE ship_city IN ('Madrid', 'Sevilla', 'Barcelona', 'Lisboa', 'London') GROUP BY ship_city ORDER BY suma_envio;  ");
-        orderService.getAll().stream().filter(order ->
-                order.getShipCity() != null && (
-                order.getShipCity().equals("Madrid")
-                || order.getShipCity().equals("Sevilla")
-                || order.getShipCity().equals("Barcelona")
-                || order.getShipCity().equals("Lisboa")
-                || order.getShipCity().equals("London")))
-                .collect(Collectors.groupingBy(Order::getShipCity, Collectors.summingDouble(order -> order.getFreight() == null ?0:order.getFreight()))).entrySet().stream()
-                .sorted(Comparator.comparing(Map.Entry::getValue))
-                .map(entry -> entry.getKey() + " " + entry.getValue())
-                .forEach(System.out::println);
-
-//        obtener el precio promedio de los productos por categoria sin contar con los productos descontinuados (Discontinued)
-        System.out.println("SELECT category_id, AVG(unit_price) FROM products WHERE discontinued = 0 GROUP BY category_id;");
-        productService.getAll().stream().filter(product -> product.getDiscontinued() == 0).collect(Collectors.groupingBy(Product::getCategoryId, Collectors.averagingDouble(Product::getUnitPrice))).forEach((categoryId, average) -> System.out.println(categoryId + " " + average));
-
-//        Obtener la cantidad de productos por categoria,  aquellos cuyo precio se encuentre entre 10 y 60 que tengan más de 12 productos
-        System.out.println("SELECT category_id, COUNT(*) FROM products WHERE unit_price BETWEEN 10 AND 60 GROUP BY category_id HAVING COUNT(*) > 12;");
-        productService.getAll().stream().filter(product -> product.getUnitPrice() > 10 && product.getUnitPrice() < 60)
-                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.counting()))
-                .entrySet().stream()
-                .filter(entry -> entry.getValue() > 12)
-                .forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
-//        --OBTENER LA SUMA DE LAS UNIDADES EN EXISTENCIA (UnitsInStock) POR CATEGORIA, Y TOMANDO EN CUENTA UNICAMENTE LOS PRODUCTOS CUYO PROVEEDOR (SupplierID) SEA IGUAL A 17, 19, 16.
-//                --cuya categoria tenga menos de 100 unidades ordenado por unidades
-        System.out.println("SELECT category_id, units_exist \n" +
-                "FROM (\n" +
-                "    SELECT category_id, SUM(units_in_stock) AS units_exist \n" +
-                "    FROM products \n" +
-                "    WHERE supplier_id IN (17, 19, 16) \n" +
-                "    GROUP BY category_id) AS tabla\n" +
-                "WHERE units_exist > 100 \n" +
-                "ORDER BY units_exist;");
-        productService.getAll().stream().filter(product -> product.getSupplierId() == 17 || product.getSupplierId() == 19 || product.getSupplierId() == 16)
-                .collect(Collectors.groupingBy(Product::getCategoryId, Collectors.summingInt(Product::getUnitsInStock)))
-                .entrySet().stream()
-                .filter(entry -> entry.getValue() < 200)
-                .sorted(Comparator.comparing(Map.Entry::getValue))
-                .forEach(entry -> System.out.println(entry.getKey() + " " + entry.getValue()));
 
     }
 
